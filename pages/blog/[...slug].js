@@ -18,9 +18,9 @@ export const getStaticProps = async ({ params }) => {
   const slug = params.slug.join('/')
   const sortedPosts = sortedBlogPost(allBlogs)
   const postIndex = sortedPosts.findIndex((p) => p.slug === slug)
-  const prevContent = sortedPosts[postIndex + 1] || null
+  const prevContent = getValidPrev(sortedPosts, postIndex)
+  const nextContent = getValidNext(sortedPosts, postIndex)
   const prev = prevContent ? coreContent(prevContent) : null
-  const nextContent = sortedPosts[postIndex - 1] || null
   const next = nextContent ? coreContent(nextContent) : null
   const post = sortedPosts.find((p) => p.slug === slug)
   const authorList = post.authors || ['default']
@@ -37,6 +37,29 @@ export const getStaticProps = async ({ params }) => {
     },
   }
 }
+
+const getValidPrev = (sortedPosts, postIndex) => {
+  let i = 1
+  let prevContent = sortedPosts[postIndex + i]
+  while (prevContent && prevContent.draft) {
+    i++
+    prevContent = sortedPosts[postIndex + i]
+  }
+
+  return prevContent
+}
+
+const getValidNext = (sortedPosts, postIndex) => {
+  let i = 1
+  let nextContent = sortedPosts[postIndex - i]
+  while (nextContent && nextContent.draft) {
+    i++
+    nextContent = sortedPosts[postIndex - i]
+  }
+
+  return nextContent
+}
+
 export default function BlogPostPage({ post, authorDetails, prev, next }) {
   return (
     <>
