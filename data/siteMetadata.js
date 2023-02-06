@@ -8,7 +8,7 @@ const siteMetadata = {
   description: '',
   language: 'en-us',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://bazil.dev',
+  siteUrl: 'https://nextjs-baz-blog-4tpm.vercel.app/',
   siteRepo: 'https://github.com/bazilzainal',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
